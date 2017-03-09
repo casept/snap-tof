@@ -1,0 +1,63 @@
+name: tof-casept
+version: '0.6.2-beta'
+summary: An unofficial snap of the turn-based strategy game Tanks of Freedom
+description: |
+  In a world full of corruption and political struggles
+  the voice of the weak is often left unheard.
+  When people rebel against governments it is time to pick your side.
+  Join the forces of newly created government and help them rise, or ally with loyalist
+  forces aided by the intervention of one of the neighbouring countries.
+
+  Challenge yourself in campaign against AI or battle your friends in a hot-seat mode,
+  where you will fight for control of strategic locations by
+  issuing commands to your infantry, tanks and airforce.
+
+  Create your own maps using in-game map editor, then share them with the world.
+
+  This is an unofficial snap, unaffiliated with the game's developers.
+
+grade: stable 
+confinement: strict
+
+apps:
+  tof:
+    # TODO: Compile and export instead of
+    # running in-place
+    command: desktop-launch $SNAP/bin/godot -path $SNAP/opt/tof/
+    plugs: [x11, opengl, pulseaudio, network, network-bind]
+
+parts:
+  godot:
+    plugin: scons
+    source: https://github.com/godotengine/godot/archive/2.1.2-stable.tar.gz
+    build-packages:
+      - build-essential
+      - pkg-config
+      - libx11-dev
+      - libxcursor-dev
+      - libxinerama-dev
+      - libgl1-mesa-dev
+      - libglu1-mesa-dev
+      - libasound2-dev
+      - libpulse-dev
+      - libfreetype6-dev
+      - libssl-dev
+      - libudev-dev
+      - libxrandr-dev
+    build: |
+      scons platform=x11 target=release tools=no bits=64 -j$(nproc)
+    install: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/bin/
+      cp bin/godot.x11.opt.64 $SNAPCRAFT_PART_INSTALL/bin/godot
+
+  tof:
+    plugin: nil
+    source: https://github.com/w84death/Tanks-of-Freedom/archive/0.6.2-beta.tar.gz
+    stage-packages:
+      - libgl1-mesa-dri
+      - libpulse0
+    install: |
+      mkdir -p $SNAPCRAFT_PART_INSTALL/opt/
+      mkdir -p $SNAPCRAFT_PART_INSTALL/opt/tof/
+      cp -r * $SNAPCRAFT_PART_INSTALL/opt/tof/
+    after: [desktop-glib-only, godot]

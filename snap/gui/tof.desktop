@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Tanks of Freedom
+Icon=${SNAP}/meta/gui/tof.png
+Exec=tof-casept.tof %u
+Terminal=false
+Categories=Game;
+Comment=Indie Turn Based Strategy in Isometric Pixel Art
+Keywords=game;tanks;pixelart;retro;multiplayer

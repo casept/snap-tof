@@ -1,5 +1,5 @@
 name: tof-casept
-version: '0.6.2-beta'
+version: '0.6.3-beta'
 summary: An unofficial snap of the turn-based strategy game Tanks of Freedom
 description: |
   In a world full of corruption and political struggles
@@ -52,7 +52,7 @@ parts:
 
   tof:
     plugin: nil
-    source: https://github.com/w84death/Tanks-of-Freedom/archive/0.6.2-beta.tar.gz
+    source: https://github.com/w84death/Tanks-of-Freedom/archive/0.6.3-beta.tar.gz
     stage-packages:
       - libgl1-mesa-dri
       - libpulse0
